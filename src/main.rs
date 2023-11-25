@@ -44,6 +44,46 @@ fn tampilkan_mahasiswa(daftar_mahasiswa: &Vec<Mahasiswa>) {
     }
 }
 
+fn edit_mahasiswa(daftar_mahasiswa: &mut Vec<Mahasiswa>) {
+    println!("Masukkan NIM mahasiswa yang akan diedit:");
+
+    let mut nim_edit = String::new();
+    io::stdin()
+        .read_line(&mut nim_edit)
+        .expect("Gagal membaca NIM");
+
+    if let Some(mahasiswa) = daftar_mahasiswa
+        .iter_mut()
+        .find(|m| m.nim == nim_edit.trim())
+    {
+        println!("Masukkan NIM mahasiswa baru:");
+        let mut nim_baru = String::new();
+        io::stdin()
+            .read_line(&mut nim_baru)
+            .expect("Gagal membaca NIM");
+
+        println!("Masukkan nama mahasiswa baru:");
+        let mut nama_baru = String::new();
+        io::stdin()
+            .read_line(&mut nama_baru)
+            .expect("Gagal membaca nama");
+
+        println!("Masukkan jurusan mahasiswa baru:");
+        let mut jurusan_baru = String::new();
+        io::stdin()
+            .read_line(&mut jurusan_baru)
+            .expect("Gagal membaca jurusan");
+
+        mahasiswa.nim = nim_baru.trim().to_string();
+        mahasiswa.nama = nama_baru.trim().to_string();
+        mahasiswa.jurusan = jurusan_baru.trim().to_string();
+
+        println!("Mahasiswa berhasil diubah!");
+    } else {
+        println!("Mahasiswa dengan NIM {} tidak ditemukan.", nim_edit.trim());
+    }
+}
+
 fn main() {
     let mut daftar_mahasiswa: Vec<Mahasiswa> = Vec::new();
 
@@ -51,7 +91,8 @@ fn main() {
         println!("Menu:");
         println!("1. Tambah Mahasiwa");
         println!("2. Tampilkan Mahasiwa");
-        println!("3. Keluar");
+        println!("3. Edit Mahasiwa");
+        println!("9. Keluar");
 
         let mut pilihan = String::new();
         io::stdin()
@@ -61,7 +102,8 @@ fn main() {
         match pilihan.trim().parse() {
             Ok(1) => tambah_mahasiswa(&mut daftar_mahasiswa),
             Ok(2) => tampilkan_mahasiswa(&daftar_mahasiswa),
-            Ok(3) => {
+            Ok(3) => edit_mahasiswa(&mut daftar_mahasiswa),
+            Ok(9) => {
                 println!("Keluar dari program. selamat tinggal!");
                 break;
             }
