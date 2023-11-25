@@ -84,6 +84,22 @@ fn edit_mahasiswa(daftar_mahasiswa: &mut Vec<Mahasiswa>) {
     }
 }
 
+fn hapus_mahasiswa(daftar_mahasiswa: &mut Vec<Mahasiswa>) {
+    println!("Masukkan NIM mahasiswa yang akan dihapus:");
+
+    let mut nim_hapus = String::new();
+    io::stdin()
+        .read_line(&mut nim_hapus)
+        .expect("Gagal membaca NIM");
+
+    if let Some(index) = daftar_mahasiswa.iter().position(|m|m.nim == nim_hapus.trim())  {
+        daftar_mahasiswa.remove(index);
+        println!("Mahasiswa berhasil dihapus!");
+    }else{
+        println!("Mahasiswa dengan NIM {} tidak ditemukan.", nim_hapus.trim());
+    }
+}
+
 fn main() {
     let mut daftar_mahasiswa: Vec<Mahasiswa> = Vec::new();
 
@@ -92,6 +108,7 @@ fn main() {
         println!("1. Tambah Mahasiwa");
         println!("2. Tampilkan Mahasiwa");
         println!("3. Edit Mahasiwa");
+        println!("4. Hapus Mahasiwa");
         println!("9. Keluar");
 
         let mut pilihan = String::new();
@@ -103,6 +120,7 @@ fn main() {
             Ok(1) => tambah_mahasiswa(&mut daftar_mahasiswa),
             Ok(2) => tampilkan_mahasiswa(&daftar_mahasiswa),
             Ok(3) => edit_mahasiswa(&mut daftar_mahasiswa),
+            Ok(4) => hapus_mahasiswa(&mut daftar_mahasiswa),
             Ok(9) => {
                 println!("Keluar dari program. selamat tinggal!");
                 break;
