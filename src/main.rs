@@ -92,10 +92,13 @@ fn hapus_mahasiswa(daftar_mahasiswa: &mut Vec<Mahasiswa>) {
         .read_line(&mut nim_hapus)
         .expect("Gagal membaca NIM");
 
-    if let Some(index) = daftar_mahasiswa.iter().position(|m|m.nim == nim_hapus.trim())  {
+    if let Some(index) = daftar_mahasiswa
+        .iter()
+        .position(|m| m.nim == nim_hapus.trim())
+    {
         daftar_mahasiswa.remove(index);
         println!("Mahasiswa berhasil dihapus!");
-    }else{
+    } else {
         println!("Mahasiswa dengan NIM {} tidak ditemukan.", nim_hapus.trim());
     }
 }
