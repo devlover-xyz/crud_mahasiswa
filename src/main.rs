@@ -1,11 +1,26 @@
 use std::io;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 struct Mahasiswa {
     nim: String,
     nama: String,
     jurusan: String,
 }
+
+
+// // Implement the Ord trait manually by comparing the nama field
+// impl Ord for Mahasiswa {
+//     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+//         self.nama.cmp(&other.nama)
+//     }
+// }
+
+// // Implement the PartialOrd trait by reusing the comparison logic from Ord
+// impl PartialOrd for Mahasiswa {
+//     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+//         Some(self.cmp(other))
+//     }
+// }
 
 fn tambah_mahasiswa(daftar_mahasiswa: &mut Vec<Mahasiswa>) {
     println!("Tambah Mahasiswa");
@@ -103,6 +118,18 @@ fn hapus_mahasiswa(daftar_mahasiswa: &mut Vec<Mahasiswa>) {
     }
 }
 
+
+fn tampilkan_urut_mahasiswa(daftar_mahasiswa: &mut Vec<Mahasiswa>) {
+    println!("Data Mahasiswa Urut");
+
+    // daftar_mahasiswa.sort();
+    daftar_mahasiswa.sort_by_key(|mhs| mhs.nim.clone());
+    
+    for mahasiswa in daftar_mahasiswa {
+        println!("{:?}", mahasiswa);
+    }
+}
+
 fn main() {
     let mut daftar_mahasiswa: Vec<Mahasiswa> = Vec::new();
 
@@ -112,6 +139,7 @@ fn main() {
         println!("2. Tampilkan Mahasiwa");
         println!("3. Edit Mahasiwa");
         println!("4. Hapus Mahasiwa");
+        println!("5. Tampil Urut Mahasiwa");
         println!("9. Keluar");
 
         let mut pilihan = String::new();
@@ -124,6 +152,7 @@ fn main() {
             Ok(2) => tampilkan_mahasiswa(&daftar_mahasiswa),
             Ok(3) => edit_mahasiswa(&mut daftar_mahasiswa),
             Ok(4) => hapus_mahasiswa(&mut daftar_mahasiswa),
+            Ok(5) => tampilkan_urut_mahasiswa(&mut daftar_mahasiswa),
             Ok(9) => {
                 println!("Keluar dari program. selamat tinggal!");
                 break;
